@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="20:20 FC - Expert Financial Coaching for a clearer tomorrow.">
+    <title>20:20 FC - FINEDICA</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>20:20 FC - FINEDICA</h1>
+                <p>Expert Financial Coaching</p>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="questionnaire.html">Questionnaire</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="avatar.html">Avatar</a></li>
+                <li><a href="chatbot.html">Chatbot</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Welcome to FINEDICA</h2>
+                <p>Expert financial coaching for a clearer tomorrow</p>
+            </div>
+            
+            <div class="auth-container">
+                <noscript>
+                    <p class="noscript-message">JavaScript is required to use the login and signup forms. Please enable JavaScript in your browser.</p>
+                </noscript>
+                <div class="tab-container">
+                    <button class="btn-primary" onclick="showLogin()" aria-label="Show Login Form">Already a Member?<br><br> Please Login Here</button>
+                    <button class="btn-secondary" onclick="showSignup()" aria-label="Show Signup Form">New User?<br><br> Let's Create an Account</button>
+                </div>
+                <div id="login-form" class="form-container hidden">
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" name="login-email" required aria-label="Email Address">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" name="login-password" required aria-label="Password">
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+                <div id="signup-form" class="form-container hidden">
+                    <h2>Sign Up</h2>
+                    <form action="signup.php" method="POST" id="signupForm">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required aria-label="First Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required aria-label="Last Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="dateOfBirth">Date of Birth</label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" required aria-label="Date of Birth">
+                        </div>
+                        <div class="form-group">
+                            <label for="employment">Present / Expected Employment</label>
+                            <input type="text" id="employment" name="employment" required aria-label="Employment">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" name="signup-email" required aria-label="Email Address">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" name="signup-password" required 
+                                   pattern=".{8,}" title="Password must be at least 8 characters long" 
+                                   aria-label="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-confirm-password">Confirm Password</label>
+                            <input type="password" id="signup-confirm-password" name="signup-confirm-password" required 
+                                   pattern=".{8,}" title="Password must be at least 8 characters long" 
+                                   aria-label="Confirm Password">
+                        </div>
+                        <button type="submit">Create Account</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>
