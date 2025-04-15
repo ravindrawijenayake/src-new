@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Psychometric Test</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>💸 Money Beliefs Psychometric Test</h1>
+    <form method="POST" action="/submit-psychometric">
+      {% for category, qs in questions.items() %}
+        <div class="category">
+          <h2>{{ category }}</h2>
+          {% for idx, question in enumerate(qs) %}
+            <div class="question-block">
+              <p><strong>{{ loop.index }} →</strong> {{ question }}</p>
+              <div class="scale">
+                {% for i in range(1, 6) %}
+                  <label>
+                    <input type="radio" name="{{ category }}_{{ idx }}" value="{{ i }}" required />
+                    <span>{{ i }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+              <div class="scale-labels">
+                <small>Strongly disagree</small>
+                <small>Strongly agree</small>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endfor %}
+      <button type="submit">Submit Test</button>
+    </form>
+  </div>
+</body>
+</html>
