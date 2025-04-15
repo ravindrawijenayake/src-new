@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
             
+            
             // Ensure upload directory exists
             if (!is_dir(UPLOAD_DIR)) {
                 mkdir(UPLOAD_DIR, 0777, true);
@@ -124,5 +125,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log('Upload process error: ' . $e->getMessage());
         echo json_encode(['success' => false, 'message' => 'Upload process failed.']);
     }
-
+}
 ?>
