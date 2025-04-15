@@ -42,8 +42,11 @@ $userName = $_SESSION['user_name'];
          <!-- src/html/chatbot.html -->
          <section class="hero">
             <div class="hero-content">
+                <h2>Welcome to the Chatbot</h2>
+                <p>Ask me anything!</p>
+            </div>
             <div class="avatar-preview">
-                <h2>Your Generated Avatar</h2>
+                <h2>Avatar Preview</h2>
                 <div id="avatarContainer">
                     <!-- Add an image placeholder for the avatar -->
                     <img id="avatarImage" src="../images/default-avatar.png" alt="Your Avatar" style="width: 150px; height: 150px; border-radius: 50%; border: 2px solid #2196f3;">
@@ -58,7 +61,7 @@ $userName = $_SESSION['user_name'];
                             <h1>Hi <?php echo htmlspecialchars($userName); ?>,</h1>
                             <h3>It's me! Let's talk. You can ask me anything you like</h3>
                                 <div class="chat-history" id="chatHistory">
-                                    
+
                     </div>
                     <div class="input-area">
                         <input type="text" id="userInput" placeholder="Type your message...">

@@ -36,4 +36,93 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: chatbot.php'); // Redirect back to the chatbot page
     exit;
 }
+require_once 'config.php';
+if (!isset($_SESSION['user_name'])) {
+    header('Location: index.php');
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        // Handle face image upload
+        if (isset($_FILES['faceImage'])) {
+            error_log('File upload details: ' . print_r($_FILES['faceImage'], true));
+            
+            if ($_FILES['faceImage']['error'] !== UPLOAD_ERR_OK) {
+                error_log('File upload error: ' . $_FILES['faceImage']['error']);
+                echo json_encode(['success' => false, 'message' => 'File upload error.']);
+                exit;
+            }
+            
+            // Ensure upload directory exists
+            if (!is_dir(UPLOAD_DIR)) {
+                mkdir(UPLOAD_DIR, 0777, true);
+            }
+            
+            $fileName = basename($_FILES['faceImage']['name']);
+            $filePath = UPLOAD_DIR . $fileName;
+            
+            if (!move_uploaded_file($_FILES['faceImage']['tmp_name'], $filePath)) {
+                error_log('Failed to move uploaded file.');
+                echo json_encode(['success' => false, 'message' => 'Failed to upload face image.']);
+                exit;
+            }
+            
+            // Upload to Google Drive
+            $googleDriveFolderId = '1_os5zlO3EgFXtIQGMTVG4b2f52oQGXfh';
+            $faceImageUrl = uploadToGoogleDrive($filePath, $googleDriveFolderId);
+            
+            // Update database
+            $pdo = getDatabaseConnection();
+            $pdo->beginTransaction();
+            try {
+                $stmt = $pdo->prepare('UPDATE users SET face_image = ? WHERE email = ?');
+                $stmt->execute([$faceImageUrl, $_SESSION['user_email']]);
+                $pdo->commit();
+                
+                echo json_encode(['success' => true, 'faceImageUrl' => $faceImageUrl]);
+            } catch (PDOException $e) {
+                $pdo->rollBack();
+                error_log('Database error: ' . $e->getMessage());
+                echo json_encode(['success' => false, 'message' => 'Database error.']);
+            }
+        }
+        // Handle avatar upload
+        elseif (isset($_POST['avatarData'])) {
+            $avatarData = $_POST['avatarData'];
+            $avatarFilePath = UPLOAD_DIR . $_SESSION['user_name'] . '_avatar.png';
+            
+            try {
+                // Save avatar image
+                file_put_contents($avatarFilePath, base64_decode($avatarData));
+                error_log('Avatar image saved to: ' . $avatarFilePath);
+                
+                // Upload to Google Drive
+                $googleDriveFolderId = '1eoBhHN9DUFImlFJpXlOcxWXZ7tCro0ku';
+                $avatarImageUrl = uploadToGoogleDrive($avatarFilePath, $googleDriveFolderId);
+                
+                // Update database
+                $pdo = getDatabaseConnection();
+                $pdo->beginTransaction();
+                try {
+                    $stmt = $pdo->prepare('UPDATE users SET avatar_image = ? WHERE user_name = ?');
+                    $stmt->execute([$avatarImageUrl, $_SESSION['user_name']]);
+                    $pdo->commit();
+                    
+                    echo json_encode(['success' => true, 'avatarImageUrl' => $avatarImageUrl]);
+                } catch (PDOException $e) {
+                    $pdo->rollBack();
+                    error_log('Database error: ' . $e->getMessage());
+                    echo json_encode(['success' => false, 'message' => 'Database error.']);
+                }
+            } catch (Exception $e) {
+                error_log('Avatar upload error: ' . $e->getMessage());
+                echo json_encode(['success' => false, 'message' => 'Avatar upload failed.']);
+            }
+        }
+    } catch (Exception $e) {
+        error_log('Upload process error: ' . $e->getMessage());
+        echo json_encode(['success' => false, 'message' => 'Upload process failed.']);
+    }
+
 ?>
