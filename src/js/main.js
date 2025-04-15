@@ -43,6 +43,80 @@ class Website {
 // Initialize the website
 const website = new Website();
 
+document.addEventListener('DOMContentLoaded', () => {
+    const faceUploadInput = document.getElementById('faceUpload');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const generateAvatarBtn = document.getElementById('generateAvatarBtn');
+    const avatarContainer = document.getElementById('avatarContainer');
+
+    // Upload face image
+    uploadBtn.addEventListener('click', () => {
+        const file = faceUploadInput.files[0];
+        if (!file) {
+            alert('Please select a face image to upload.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('faceImage', file);
+
+        fetch('../php/avatar.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Face image uploaded successfully!');
+                console.log('Face Image URL:', data.faceImageUrl);
+            } else {
+                alert('Failed to upload face image.');
+            }
+        })
+        .catch(error => {
+            console.error('Error uploading face image:', error);
+        });
+    });
+
+    // Generate avatar
+    generateAvatarBtn.addEventListener('click', () => {
+        const hairColor = document.getElementById('hairColor').value;
+        const eyeColor = document.getElementById('eyeColor').value;
+        const skinTone = document.getElementById('skinTone').value;
+        const clothingColor = document.getElementById('clothingColor').value;
+
+        // Simulate avatar generation (replace with actual logic if needed)
+        const avatarData = `data:image/png;base64,${btoa('Generated Avatar Data')}`;
+
+        // Display generated avatar
+        const img = document.createElement('img');
+        img.src = avatarData;
+        avatarContainer.innerHTML = '';
+        avatarContainer.appendChild(img);
+
+        // Send avatar to backend
+        fetch('../php/avatar.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ avatarData: avatarData.split(',')[1] })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Avatar uploaded successfully!');
+                console.log('Avatar Image URL:', data.avatarImageUrl);
+            } else {
+                alert('Failed to upload avatar.');
+            }
+        })
+        .catch(error => {
+            console.error('Error uploading avatar:', error);
+        });
+    });
+});
+
 // src/js/auth.js (continued)
 function showLogin() {
     document.getElementById('login-form').classList.add('active');

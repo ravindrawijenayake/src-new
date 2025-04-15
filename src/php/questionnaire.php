@@ -28,20 +28,20 @@ $userName = $_SESSION['user_name'];
                 <p>Expert Financial Coaching</p>
             </div>
             <ul>
-                <li><a href="index.php">Home</a></li>
+                <li><a href="home.php">Home</a></li>
                 <li><a href="questionnaire.php">Questionnaire</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="avatar.php">Avatar</a></li>
                 <li><a href="chatbot.php">Chatbot</a></li>
+                <li><a href="logout.php" style="font-size: 14px; color:rgb(7, 249, 168)">Logout <?php echo htmlspecialchars($userName);?></a></li>
             </ul>
-        </nav>
+        </nav>  
     </header>
     <main>
         <!-- Your website content goes here -->
         <div class="welcome-container">
             <h1>Welcome, <?php echo htmlspecialchars($userName); ?>!</h1>
             <h2 style="color: white;">You are now logged in.</h2>
-            <a href="logout.php" style="font-size: 20px; color: blue">Logout</a>
         </div>
         <div class="intro-container">        
             <h3>To get started, we need to do a psychometric test. Once you complete the test, we will create your avatar.</h3> 

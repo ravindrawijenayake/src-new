@@ -1,0 +1,2 @@
+[13-Apr-2025 16:45:23 Europe/Berlin] GET request received for debugging.
+[13-Apr-2025 16:48:48 Europe/Berlin] GET request received for debugging.
