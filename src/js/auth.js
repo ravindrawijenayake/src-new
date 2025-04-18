@@ -14,7 +14,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
 
         if (responseData.success) {
             alert(responseData.message); // Show success message
-            window.location.href = 'questionnaire.php'; // Redirect to a dashboard or home page
+            window.location.href = 'home.php'; // Redirect to a dashboard or home page
         } else {
             alert(responseData.error); // Show error message
         }

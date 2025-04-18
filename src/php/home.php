@@ -39,9 +39,17 @@ $userName = $_SESSION['user_name']; // Retrieve the username from the session
     <main>
     <section class="hero">
             <div class="hero-content">
-                <h2>Welcome to FINEDICA</h2>
+            <p>Hi <?php echo htmlspecialchars($userName); ?>! Welcome to Your Financial Journey with</p>
+                <h2>FINEDICA</h2>
                 <p>Expert financial coaching for a clearer tomorrow</p>
             </div>
+            <div class="auth-container">
+                <div class="tab-container">
+                    <a href="questionnaire.php">
+                        <button class="btn-primary">Start Financial Journey</button>
+                    </a>
+                </div>
+             </div>   
     </section>
     </main>
     <script src="../js/main.js"></script>

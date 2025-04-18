@@ -145,7 +145,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
         const user = await authManager.login(email, password);
         console.log('Logged in successfully:', user);
         // Redirect to welcome page
-        window.location.href = 'index.html';
+        window.location.href = 'home.php';
     } catch (error) {
         console.error('Login failed:', error);
         alert('Login failed. Please check your credentials.');

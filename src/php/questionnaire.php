@@ -55,13 +55,16 @@ $userName = $_SESSION['user_name'];
             </div>
             <div class="avatar-setup">
                 <button onclick="uploadAvatar()"><h1>Make Avatar</h1></button>
-            
             </div>
             <div class="chatbot-setup">
                 <button onclick="startChatbot()"><h1>Start Advice</h1></button>
+            </div>
+            <div class="expenditure-setup">
+                <a href="expenditure.php">
+                    <button onclick="startExpenditure()"><h1>Track Expenditure</h1></button>
+                </a>
+            </div>
         </div>
-
-</div>
     </main>
     <script src="../js/main.js"></script>
 </body>
