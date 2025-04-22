@@ -48,9 +48,11 @@ $userName = $_SESSION['user_name'];
         </div>
         <div class="setup-container">    
             <div class="profile-setup">
-                <button onclick="startQuestionnaire()"><h1>Take Test</h1></button>
+                <a href="frontend_psychometric_test.php">
+                    <button onclick="startQuestionnaire()"><h1>Take Test</h1></button>
             </div>
             <div class="futureself-setup">
+                <a href="futureself.php">
                 <button onclick="startFutureSelf()"><h1>Future Self</h1></button>
             </div>
             <div class="avatar-setup">
