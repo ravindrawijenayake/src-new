@@ -56,10 +56,12 @@ $userName = $_SESSION['user_name'];
                 <button onclick="startFutureSelf()"><h1>Future Self</h1></button>
             </div>
             <div class="avatar-setup">
+                <a href="avatar.php">
                 <button onclick="uploadAvatar()"><h1>Make Avatar</h1></button>
             </div>
             <div class="chatbot-setup">
-                <button onclick="startChatbot()"><h1>Start Advice</h1></button>
+                <a href="chatbot.php">
+                    <button onclick="startChatbot()"><h1>Start Advice</h1></button>
             </div>
             <div class="expenditure-setup">
                 <a href="expenditure.php">

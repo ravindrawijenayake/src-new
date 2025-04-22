@@ -1,4 +1,4 @@
-<!-- filepath: c:\xampp\htdocs\2020FC\src\php\future_self.php -->
+<!-- filepath: c:\xampp\htdocs\2020FC\src\php\futureself.php -->
 <?php
 session_start();
 
@@ -23,10 +23,6 @@ $password = '';
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Test query
-    $stmt = $pdo->query("SELECT 1");
-    echo "Database connection successful.<br>";
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
@@ -47,13 +43,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Execute the query and check for errors
             if (!$stmt->execute()) {
-                echo "<h3>Error inserting data: " . implode(", ", $stmt->errorInfo()) . "</h3>";
+                echo "<div class='error-message'>Error inserting data: " . htmlspecialchars(implode(", ", $stmt->errorInfo())) . "</div>";
                 exit;
             }
         }
     }
 
-    echo "<h3>Thank you! Your responses have been saved.</h3>";
+    // Store the submitted data in the session for review
+    $_SESSION['submitted_stage'] = $stage;
+    $_SESSION['submitted_responses'] = $responses;
+
+    // Redirect to the review page
+    header('Location: futureself_responses.php');
     exit;
 }
 ?>
@@ -66,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>20:20 FC - FINEDICA</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/expenditurestyle.css">
+    <link rel="stylesheet" href="../css/futureselfstyle.css">
 </head>
 <body>
     <header>
@@ -104,28 +106,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Define questions for each category
                 $categories = [
                     "Physicality" => [
-                        "How do you imagine your physical health at this stage?",
-                        "What activities will you do to stay healthy?"
+                        "1. How do you imagine your physical health at this stage?",
+                        "2. What activities will you do to stay healthy?"
                     ],
                     "Finances" => [
-                        "What will your financial situation look like?",
-                        "What steps will you take to achieve financial stability?"
+                        "1. What will your financial situation look like?",
+                        "2. What steps will you take to achieve financial stability?"
                     ],
-                    "Emotional/spiritual" => [
-                        "How will you maintain emotional and spiritual well-being?",
-                        "What practices will you follow to stay emotionally balanced?"
+                    "Emotional/ Spiritual" => [
+                        "1. How will you maintain emotional and spiritual well-being?",
+                        "2. What practices will you follow to stay emotionally balanced?"
                     ],
                     "LifeStyle" => [
-                        "What will your daily lifestyle look like?",
-                        "What hobbies or interests will you pursue?"
+                        "1. What will your daily lifestyle look like?",
+                        "2. What hobbies or interests will you pursue?"
                     ],
                     "Profession" => [
-                        "What will your professional life look like?",
-                        "What goals will you set for your career?"
+                        "1. What will your professional life look like?",
+                        "2. What goals will you set for your career?"
                     ],
                     "Relationships" => [
-                        "What will your relationships with family and friends look like?",
-                        "How will you nurture these relationships?"
+                        "1. What will your relationships with family and friends look like?",
+                        "2. How will you nurture these relationships?"
                     ]
                 ];
 

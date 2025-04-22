@@ -1,4 +1,10 @@
 /* src/css/main.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #b6f8fd;
+    margin: 0;
+    padding: 0;
+}
 :root {
     --primary-color: #2196f3;
     --secondary-color: #ff4081;
