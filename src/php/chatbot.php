@@ -48,8 +48,29 @@ $userName = $_SESSION['user_name'];
             <div class="avatar-preview">
                 <h2>Avatar Preview</h2>
                 <div id="avatarContainer">
-                    <!-- Add an image placeholder for the avatar -->
-                    <img id="avatarImage" src="../images/default-avatar.png" alt="Your Avatar" style="width: 150px; height: 150px; border-radius: 50%; border: 2px solid #2196f3;">
+                    <script>
+                        document.getElementById('generate-avatar-btn').addEventListener('click', function() {
+                        console.log('Generate button clicked');
+
+                        fetch('../php/generate_avatar.php', {
+                            method: 'POST',
+                            body: JSON.stringify({ email: userEmail }),
+                            headers: { 'Content-Type': 'application/json' }
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log('Response:', data);
+                            if (data.status === 'ok') {
+                                document.getElementById('avatar-preview').innerHTML = `
+                                    <img src="${data.avatar_path}?t=${new Date().getTime()}" alt="Generated Avatar" style="max-width:400px;">
+                                `;
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(err => console.error('Fetch error:', err));
+                    });
+                    </script>
                 </div>
             </div>
             </div>

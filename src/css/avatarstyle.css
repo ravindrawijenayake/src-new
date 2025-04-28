@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.image-section, .avatar-section {
+    width: 45%;
+    text-align: center;
+}
+
+.image-preview img, #avatar-preview img {
+    max-width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.generate-avatar-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #07f9a8;
+    color: #222;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+.generate-avatar-button:hover {
+    background-color: #05d98f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

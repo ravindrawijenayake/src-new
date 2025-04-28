@@ -1,3 +1,6 @@
+import sys
+import json
+
 # Define questions for each category
 questions = {
     "Money Avoidance": [
@@ -68,3 +71,33 @@ top_category = max(scores, key=scores.get)
 
 print(f"\n🏆 Dominant Money Belief: {top_category}")
 print(descriptions[top_category])
+
+def calculate_scores(answers):
+    scores = {}
+    for category, responses in answers.items():
+        scores[category] = sum(responses)
+    top_category = max(scores, key=scores.get)
+    description = f"The dominant money belief is {top_category}, which reflects your financial mindset."
+    return scores, top_category, description
+
+def main():
+    if len(sys.argv) != 2:
+        print(json.dumps({'status': 'error', 'message': 'Invalid input'}))
+        return
+
+    try:
+        input_data = json.loads(sys.argv[1])
+        email = input_data.get('email')
+        answers = input_data.get('answers')
+
+        if not email or not answers:
+            print(json.dumps({'status': 'error', 'message': 'Missing email or answers'}))
+            return
+
+        scores, top_category, description = calculate_scores(answers)
+        print(json.dumps({'status': 'ok', 'scores': scores, 'top_category': top_category, 'description': description}))
+    except Exception as e:
+        print(json.dumps({'status': 'error', 'message': str(e)}))
+
+if __name__ == '__main__':
+    main()

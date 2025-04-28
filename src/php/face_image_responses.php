@@ -1,24 +1,16 @@
 <?php
 session_start();
 
-// Check if the user is logged in
+// Check login
 if (!isset($_SESSION['user_email'])) {
     header('Location: index.php');
     exit;
 }
 
-// Check if the submitted data exists in the session
-if (!isset($_SESSION['submitted_stage']) || !isset($_SESSION['submitted_responses'])) {
-    header('Location: avatar.php');
-    exit;
-}
-
 $userEmail = $_SESSION['user_email'];
 $userName = $_SESSION['user_name'];
-$stage = $_SESSION['submitted_stage'];
-$responses = $_SESSION['submitted_responses'];
 
-// Fetch the uploaded face image URL from the database
+// Database connection
 $host = 'localhost';
 $dbname = 'user_reg_db';
 $username = 'root';
@@ -29,7 +21,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $pdo->prepare("SELECT face_image_url FROM face_image_responses WHERE email = :email ORDER BY id DESC LIMIT 1");
-    $stmt->bindValue(':email', $userEmail, PDO::PARAM_STR);
+    $stmt->bindParam(':email', $userEmail);
     $stmt->execute();
     $faceImageUrl = $stmt->fetchColumn();
 } catch (PDOException $e) {
@@ -41,11 +33,12 @@ try {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review Your Face Image</title>
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/expenditurestyle.css">
-    <link rel="stylesheet" href="../css/futureselfstyle.css">
+    <link rel="stylesheet" href="../css/avatarstyle.css">
+    <script>
+        const userEmail = "<?php echo $userEmail; ?>";
+    </script>
 </head>
 <body>
     <header>
@@ -60,27 +53,56 @@ try {
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="avatar.php">Avatar</a></li>
                 <li><a href="chatbot.php">Chatbot</a></li>
-                <li><a href="logout.php" style="font-size: 14px; color:rgb(7, 249, 168)">Logout <?php echo htmlspecialchars($userName); ?></a></li>
+                <li><a href="logout.php">Logout <?php echo htmlspecialchars($userName); ?></a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <div class="success-message">Thank you! Your face image has been saved successfully.</div>
-        <div class="review-container">
-            <h3>Review Your Face Image</h3>
-            <?php if ($faceImageUrl): ?>
-                <div class="image-preview">
-                    <img src="<?php echo htmlspecialchars($faceImageUrl); ?>" alt="Uploaded Face Image" />
-                </div>
-            <?php else: ?>
-                <p>No face image uploaded.</p>
-            <?php endif; ?>
+        <div class="container">
+            <div class="image-section">
+                <h3>Uploaded Face Image</h3>
+                <?php if ($faceImageUrl): ?>
+                    <div class="image-preview">
+                        <img src="<?php echo htmlspecialchars($faceImageUrl); ?>" alt="Uploaded Face Image" style="max-width: 400px;" />
+                    </div>
+                <?php else: ?>
+                    <p>No face image uploaded.</p>
+                <?php endif; ?>
+            </div>
 
-            <form action="next_step.php" method="GET" class="next-form">
-                <button type="submit" class="next-button">Next</button>
-            </form>
+            <div class="avatar-section">
+                <h3>Generated Avatar</h3>
+                <div id="avatar-preview">
+                    <p>No avatar generated yet.</p>
+                </div>
+                <button id="generate-avatar-btn">Generate Avatar</button>
+            </div>
         </div>
     </main>
+
+    <script>
+        document.getElementById('generate-avatar-btn').addEventListener('click', function() {
+            console.log('Generate button clicked');
+
+            fetch('../php/generate_avatar.php', {
+                method: 'POST',
+                body: JSON.stringify({ email: userEmail }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('Response:', data);
+                if (data.status === 'ok') {
+                    document.getElementById('avatar-preview').innerHTML = `
+                        <img src="${data.avatar_path}?t=${new Date().getTime()}" alt="Generated Avatar" style="max-width:400px;">
+                    `;
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(err => console.error('Fetch error:', err));
+        });
+    </script>
 </body>
 </html>

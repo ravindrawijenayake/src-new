@@ -53,7 +53,7 @@ $responses = $_SESSION['submitted_responses'];
                 </div>
             <?php endforeach; ?>
 
-            <form action="avatar.php" method="GET" class="next-form">
+            <form action="face_image.php" method="GET" class="next-form">
                 <button type="submit" class="next-button">Next</button>
             </form>
         </div>

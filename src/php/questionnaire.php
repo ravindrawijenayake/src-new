@@ -56,7 +56,7 @@ $userName = $_SESSION['user_name'];
                 <button onclick="startFutureSelf()"><h1>Future Self</h1></button>
             </div>
             <div class="avatar-setup">
-                <a href="avatar.php">
+                <a href="face_image_responses.php">
                 <button onclick="uploadAvatar()"><h1>Make Avatar</h1></button>
             </div>
             <div class="chatbot-setup">
