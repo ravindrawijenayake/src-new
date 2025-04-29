@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Psychometric Test Result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Your Results</h1>
+    
+    <div class="card result-card">
+      <h2>🏆 Dominant Money Belief: <span class="highlight">{{ top_category }}</span></h2>
+      <p>{{ description }}</p>
+    </div>
+
+    <div class="card scores-card">
+      <h3>🔢 Category Scores:</h3>
+      <ul>
+        {% for category, score in scores.items() %}
+          <li><strong>{{ category }}:</strong> {{ score }} points</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <a href="/psychometric-test" class="btn">Take Test Again</a>
+  </div>
+</body>
+</html>
