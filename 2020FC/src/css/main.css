@@ -1,0 +1,245 @@
+/* src/css/main.css */
+:root {
+    --primary-color: #2196f3;
+    --secondary-color: #ff4081;
+    --background-color: #f5f5f5;
+    --text-color: #333;
+    --accent-color: #2c3e50;
+}
+
+/* Header Styles */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: white;
+    margin-right: 2rem;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #87b1f5 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 50%;
+    z-index: 1;
+}
+
+.hero-content h2 {
+    color: var(--accent-color);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-content p {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+/* Navigation Links */
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    opacity: 0.8;
+}
+
+/* Authentication Styles */
+.auth-container {
+    max-width: 400px;
+    margin: 5rem auto;
+    padding: 2rem;
+    background: rgb(94, 161, 215);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.tab-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #eee;
+}
+
+.tab-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: bold;
+    color: #666;
+}
+
+.tab-button.active {
+    color: #2196f3;
+    border-bottom: 2px solid #2196f3;
+}
+
+.form-container {
+    display: none;
+}
+
+.form-container.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+    max-height: 50vh;
+    overflow-y: auto;
+
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input {
+    width: 90%;
+    padding: 0.75rem;
+    border: 2px solid #eee;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #2196f3;
+    outline: none;
+}
+
+button {
+    width: 95%;
+    padding: 1rem;
+    background-color: #2c1dd2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1976d2;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+.avatar-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.space-bubble-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+}
+
+.bubble {
+    background: linear-gradient(135deg, #6e8efb, #a777e3);    
+    border-radius: 20px;
+    padding: 1rem;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(110, 122, 255, 0.2);
+}
+
+.input-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.input-area input {
+    height: 300px; /* Adjusted height for input field */
+    width: 90%; /* Adjusted width for better layout */
+    padding: 1rem; /* Standard padding for usability */
+    border: 2px solid #eee;
+    border-radius: 6px;
+    font-size: 1rem; /* Standard font size */
+    transition: border-color 0.3s ease, width 0.3s ease; /* Added transition for width */
+}
+
+.input-area input:focus {
+    border-color: #2196f3;
+    outline: none;
+    width: 90%; /* Expand width on focus */
+}
+
+.welcome-container {
+    align-items: center;
+    justify-content: center;
+    height: 15vh;
+    background-color: rgb(211, 218, 244);
+}
+.setup-container {
+    display: flex;
+    font-size: larger;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 5rem;
+    background: rgb(183, 242, 243);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
