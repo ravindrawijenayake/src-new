@@ -11,15 +11,15 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    echo json_encode(['status' => 'error', 'message' => 'Database connection failed: ' . $e->getMessage()]);
+    echo json_encode(['status' => 'error', 'message' => 'Database connection failed']);
     exit;
 }
 
 // Read input
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (!isset($data['email'])) {
-    echo json_encode(['status' => 'error', 'message' => 'Email is required']);
+if (!isset($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid or missing email']);
     exit;
 }
 
@@ -41,26 +41,54 @@ $source_image = realpath(__DIR__ . "/../uploads/" . basename($faceImageUrl));
 $avatar_output_dir = realpath(__DIR__ . "/../avatars/");
 $avatar_output = $avatar_output_dir . "/avatar_" . basename($faceImageUrl);
 
-if (!$source_image || !$avatar_output_dir) {
-    echo json_encode(['status' => 'error', 'message' => 'File path error']);
+if (!$source_image || !$avatar_output_dir || !file_exists($source_image)) {
+    echo json_encode(['status' => 'error', 'message' => 'Source image file not found or invalid paths']);
     exit;
 }
 
 // Build and run Python command
-$python = "C:\\Users\\Administrator\\AppData\\Local\\Microsoft\\WindowsApps\\python.exe";
-$script = realpath(__DIR__ . "/../python/generate_avatar.py");
-
+$python = "C:\\Python311\\python.exe";
+$script = realpath(__DIR__ . "\\..\\python\\generate_avatar.py");
 $cmd = "\"$python\" \"$script\" \"$source_image\" \"$avatar_output\"";
-exec($cmd, $output, $return_var);
 
-if ($return_var !== 0) {
-    echo json_encode(['status' => 'error', 'message' => 'Avatar generation failed']);
+$descriptors = [
+    0 => ['pipe', 'r'], // stdin
+    1 => ['pipe', 'w'], // stdout
+    2 => ['pipe', 'w']  // stderr
+];
+
+$process = proc_open($cmd, $descriptors, $pipes);
+
+if (!is_resource($process)) {
+    echo json_encode(['status' => 'error', 'message' => 'Failed to execute Python script']);
+    exit;
+}
+
+$stdout = stream_get_contents($pipes[1]);
+$stderr = stream_get_contents($pipes[2]);
+
+foreach ($pipes as $pipe) {
+    fclose($pipe);
+}
+
+$returnCode = proc_close($process);
+
+if ($returnCode !== 0) {
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Python script execution failed',
+        'debug' => ['stderr' => $stderr, 'stdout' => $stdout]
+    ]);
     exit;
 }
 
 // Check if avatar was created
 if (!file_exists($avatar_output)) {
-    echo json_encode(['status' => 'error', 'message' => 'Avatar file not found']);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Avatar file not found after script execution',
+        'debug' => ['stdout' => $stdout, 'stderr' => $stderr]
+    ]);
     exit;
 }
 
@@ -75,7 +103,8 @@ try {
     $stmt->bindParam(':avatar_path', $avatar_output);
     $stmt->execute();
 } catch (PDOException $e) {
-    echo json_encode(['status' => 'error', 'message' => 'Failed to save avatar to database: ' . $e->getMessage()]);
+    error_log("Database error: " . $e->getMessage());
+    echo json_encode(['status' => 'error', 'message' => 'Failed to save avatar to database']);
     exit;
 }
 

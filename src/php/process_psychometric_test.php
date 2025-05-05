@@ -29,8 +29,8 @@ $input = [
 ];
 
 // Call Python script
-$python = 'python3'; // or 'python' depending on your environment
-$script = __DIR__ . '/psychometric_test.py';
+$python = "C:\\Python311\\python.exe"; // or 'python' depending on your environment
+$script = realpath(__DIR__ . "\\..\\python\\psychometric_test.py");
 $input_json = escapeshellarg(json_encode($input));
 
 $cmd = "$python $script $input_json";

@@ -78,6 +78,27 @@ def cartoonize_with_aging(image_path, output_path):
     # Save the final image
     img.save(output_path)
 
+def create_watercolor_avatar(image_path, output_path):
+    """
+    Create an avatar with a watercolor effect and vignette overlay.
+    """
+    # Open the input image
+    img = Image.open(image_path).convert("RGB")
+
+    # Step 1: Apply the watercolor effect
+    img = watercolor_effect(img)
+
+    # Step 2: Add a vignette overlay
+    img = add_vignette(img, intensity=0.6)
+
+    # Step 3: Add a border around the avatar
+    border_color = (255, 255, 255)  # White border
+    border_width = 15
+    img = ImageOps.expand(img, border=border_width, fill=border_color)
+
+    # Save the final avatar
+    img.save(output_path)
+
 def create_artistic_avatar(image_path, output_path):
     """
     Create an artistic avatar with a sketch effect and color overlay.

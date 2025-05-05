@@ -1,27 +1,47 @@
 <?php
 session_start();
-require_once __DIR__ . '/../src/php/config.php';
 
-if (!isset($_GET['email']) || !filter_var($_GET['email'], FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    exit('Invalid email address');
-}
+// Database connection
+$host = 'localhost';
+$dbname = 'user_reg_db';
+$username = 'root';
+$password = '';
 
 try {
-    $pdo = getDatabaseConnection();
-    $stmt = $pdo->prepare('SELECT avatar_data FROM avatars WHERE user_email = ?');
-    $stmt->execute([$_GET['email']]);
-    $avatarData = $stmt->fetchColumn();
-
-    if ($avatarData) {
-        header('Content-Type: image/png');
-        echo $avatarData;
-    } else {
-        http_response_code(404);
-        echo 'Avatar not found';
-    }
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
-    http_response_code(500);
-    error_log("Database error: " . $e->getMessage());
-    echo 'Error retrieving avatar';
+    echo json_encode(['status' => 'error', 'message' => 'Database connection failed']);
+    exit;
 }
+
+// Ensure the user is logged in
+if (!isset($_SESSION['user_email'])) {
+    echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
+    exit;
+}
+
+$email = $_SESSION['user_email'];
+
+// Fetch the avatar path for the given email
+$stmt = $pdo->prepare("SELECT avatar_path FROM avatar WHERE email = :email LIMIT 1");
+$stmt->bindParam(':email', $email);
+$stmt->execute();
+$avatarPath = $stmt->fetchColumn();
+
+// Construct web-accessible URL for the avatar
+$baseUrl = "http://localhost/2020FC/src/";
+if ($avatarPath) {
+    $avatarPath = $baseUrl . "avatars/" . basename($avatarPath);
+}
+
+// Return the avatar path as a JSON response
+if ($avatarPath) {
+    echo json_encode([
+        'status' => 'ok',
+        'avatar_path' => $avatarPath
+    ]);
+} else {
+    echo json_encode(['status' => 'error', 'message' => 'No avatar found for this user']);
+}
+exit;

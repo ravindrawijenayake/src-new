@@ -77,13 +77,19 @@ try {
                     <p>No avatar generated yet.</p>
                 </div>
                 <button id="generate-avatar-btn">Generate Avatar</button>
+                <div id="navigation-buttons" style="display: none;">
+                    <button id="back-btn">Back</button>
+                    <button id="next-btn">Next</button>
+                </div>
             </div>
         </div>
     </main>
 
     <script>
         document.getElementById('generate-avatar-btn').addEventListener('click', function() {
-            console.log('Generate button clicked');
+            const button = this;
+            button.disabled = true;
+            button.textContent = 'Generating...';
 
             fetch('../php/generate_avatar.php', {
                 method: 'POST',
@@ -97,11 +103,31 @@ try {
                     document.getElementById('avatar-preview').innerHTML = `
                         <img src="${data.avatar_path}?t=${new Date().getTime()}" alt="Generated Avatar" style="max-width:400px;">
                     `;
+                    // Hide the Generate Avatar button and show navigation buttons
+                    document.getElementById('generate-avatar-btn').style.display = 'none';
+                    document.getElementById('navigation-buttons').style.display = 'block';
                 } else {
                     alert('Error: ' + data.message);
                 }
             })
-            .catch(err => console.error('Fetch error:', err));
+            .catch(err => {
+                console.error('Fetch error:', err);
+                alert('An unexpected error occurred. Please try again later.');
+            })
+            .finally(() => {
+                button.disabled = false;
+                button.textContent = 'Generate Avatar';
+            });
+        });
+
+        // Back button functionality
+        document.getElementById('back-btn').addEventListener('click', function() {
+            window.history.back();
+        });
+
+        // Next button functionality
+        document.getElementById('next-btn').addEventListener('click', function() {
+            window.location.href = 'chatbot.php';
         });
     </script>
 </body>

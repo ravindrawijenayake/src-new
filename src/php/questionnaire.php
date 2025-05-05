@@ -31,7 +31,7 @@ $userName = $_SESSION['user_name'];
                 <li><a href="home.php">Home</a></li>
                 <li><a href="questionnaire.php">Questionnaire</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li><a href="avatar.php">Avatar</a></li>
+                <li><a href="avatar_frontpage.php">Avatar</a></li>
                 <li><a href="chatbot.php">Chatbot</a></li>
                 <li><a href="logout.php" style="font-size: 14px; color:rgb(7, 249, 168)">Logout <?php echo htmlspecialchars($userName);?></a></li>
             </ul>
@@ -64,7 +64,7 @@ $userName = $_SESSION['user_name'];
                     <button onclick="startChatbot()"><h1>Start Advice</h1></button>
             </div>
             <div class="expenditure-setup">
-                <a href="expenditure.php">
+                <a href="../expenditure/index.php">
                     <button onclick="startExpenditure()"><h1>Track Expenditure</h1></button>
                 </a>
             </div>
