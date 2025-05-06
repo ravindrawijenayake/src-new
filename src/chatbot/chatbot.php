@@ -44,8 +44,8 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot - 20:20 FC</title>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/chatbotstyle.css">
+    <link rel="stylesheet" href="../chatbot/main.css">
+    <link rel="stylesheet" href="../chatbot/chatbotstyle.css">
 
 </head>
 <body>
@@ -56,12 +56,12 @@ try {
                 <p>Expert Financial Coaching</p>
             </div>
             <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="questionnaire.php">Questionnaire</a></li>
+                <li><a href="../php/index.php">Home</a></li>
+                <li><a href="../php/questionnaire.php">Questionnaire</a></li>
                 <li><a href="#contact">Contact</a></li>
                 <li><a href="avatar.php">Avatar</a></li>
                 <li><a href="chatbot.php">Chatbot</a></li>
-                <li><a href="logout.php">Logout <?php echo htmlspecialchars($userName); ?></a></li>
+                <li><a href="../php/logout.php">Logout <?php echo htmlspecialchars($userName); ?></a></li>
             </ul>
         </nav>
     </header>
@@ -139,7 +139,7 @@ try {
             chatHistory.innerHTML += userMessage;
 
             // Send the message to the Flask API
-            fetch('http://localhost/chat', {
+            fetch('http://127.0.0.1:5002/chat', { 
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: userInput })
