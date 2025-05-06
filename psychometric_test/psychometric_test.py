@@ -1,4 +1,4 @@
-# Define questions for each category
+# Questions for each category
 questions = {
     "Money Avoidance": [
         "I do not deserve a lot of money when others have less than me.",
@@ -30,7 +30,7 @@ questions = {
     ]
 }
 
-# Descriptions
+# Description for each category
 descriptions = {
     "Money Avoidance": "Money Avoiders may also believe that they do not deserve money. They may believe that wealthy people are greedy or corrupt. They often believe that there is virtue in living with less money.",
     "Money Worship": "Money Worshipers believe that money is the key to happiness. They feel that the solution to their problems is to have more money. At the same time, they believe that one can never have enough money. They find that the pursuit of money never quite satisfies them.",
@@ -38,7 +38,7 @@ descriptions = {
     "Money Vigilance": "The Money Vigilant are alert, watchful, and concerned about their financial health. Feeling that they have enough money is important to them. They believe it is important to save."
 }
 
-# Collect scores
+# Collate scores
 scores = {category: 0 for category in questions}
 
 print("Rate each statement from 1 to 5:\n1 = Strongly Disagree, 5 = Strongly Agree\n")
@@ -58,7 +58,7 @@ for category, qs in questions.items():
             except ValueError:
                 print("Invalid input. Please enter a number from 1 to 5.")
 
-# Show results
+# Show final results
 print("\n--- Your Results ---")
 for cat, score in scores.items():
     print(f"{cat}: {score} points")
