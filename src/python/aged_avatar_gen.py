@@ -1,12 +1,10 @@
 import sys
 import os
-from PIL import Image, ImageFilter
-import python_avatars as avatars
-import cairosvg
+from PIL import Image, ImageFilter, ImageDraw, ImageEnhance
 
 def generate_avatar(output_path):
     """
-    Generate a creative avatar using the python-avatars library.
+    Generate a creative avatar using PIL.
     
     Args:
         output_path (str): Path where the avatar PNG will be saved
@@ -17,23 +15,26 @@ def generate_avatar(output_path):
     try:
         print("Debug: Starting avatar generation...")
         
-        # Create an avatar with valid custom options
-        avatar = avatars.Avatar.random(
-            background_color="#aabbcc",  # Example background color
-            clothing_color="#ffcc00",    # Example clothing color
-            hair_color="#663399"         # Example hair color
-        )
+        # Create a new image with a white background
+        size = (400, 400)
+        img = Image.new('RGB', size, 'white')
+        draw = ImageDraw.Draw(img)
+        
+        # Draw a simple avatar (circle with face features)
+        # Background circle
+        draw.ellipse([50, 50, 350, 350], fill='#aabbcc')
+        
+        # Face features
+        draw.ellipse([150, 150, 250, 250], fill='#663399')  # Face
+        draw.ellipse([180, 200, 220, 240], fill='white')    # Eyes
+        draw.ellipse([280, 200, 320, 240], fill='white')
+        draw.arc([150, 250, 250, 300], 0, 180, fill='#ffcc00', width=5)  # Smile
         
         print("Debug: Avatar created successfully.")
         
-        # Save the avatar as an SVG first
-        svg_path = output_path.replace(".png", ".svg")
-        print(f"Debug: Saving avatar as SVG to: {svg_path}")
-        avatar.render(svg_path)
-        
-        # Convert SVG to PNG
-        print(f"Debug: Converting SVG to PNG: {output_path}")
-        cairosvg.svg2png(url=svg_path, write_to=output_path)
+        # Save the avatar as PNG
+        print(f"Debug: Saving avatar as PNG: {output_path}")
+        img.save(output_path, 'PNG')
         
         print(f"Debug: Avatar successfully saved to: {output_path}")
         

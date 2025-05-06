@@ -1,124 +1,108 @@
 import sys
-from PIL import Image, ImageEnhance, ImageFilter, ImageOps, ImageDraw
+from PIL import Image, ImageEnhance, ImageFilter, ImageOps, ImageDraw, ImageChops
+import numpy as np
 
-def add_aging_effects(img):
+def resize_and_crop(img, target_size=(512, 512)):
     """
-    Apply aging effects to the image.
-    - Desaturate the image to reduce color vibrancy.
-    - Add wrinkles or texture.
-    - Darken certain areas for an older look.
+    Resize and crop image to create a perfect square avatar.
     """
-    # Step 1: Desaturate the image
-    enhancer = ImageEnhance.Color(img)
-    img = enhancer.enhance(0.5)  # Reduce color saturation
-
-    # Step 2: Add wrinkles (texture overlay)
     width, height = img.size
-    texture = Image.new("L", (width, height), 128)  # Create a gray texture
-    draw = ImageDraw.Draw(texture)
+    size = min(width, height)
+    left = (width - size) // 2
+    top = (height - size) // 2
+    right = left + size
+    bottom = top + size
+    
+    img = img.crop((left, top, right, bottom))
+    return img.resize(target_size, Image.Resampling.LANCZOS)
 
-    # Draw wrinkle-like lines
-    for i in range(20, height, 40):
-        draw.line([(0, i), (width, i)], fill=10, width=1)
+def add_avatar_effects(img):
+    """
+    Apply avatar-specific effects to make the image look more like an avatar.
+    """
+    # Convert to RGBA if not already
+    img = img.convert('RGBA')
+    
+    # Create a mask for the circular shape
+    mask = Image.new('L', img.size, 0)
+    draw = ImageDraw.Draw(mask)
+    draw.ellipse((0, 0, img.size[0], img.size[1]), fill=255)
+    
+    # Apply the mask
+    output = Image.new('RGBA', img.size, (0, 0, 0, 0))
+    output.paste(img, mask=mask)
+    
+    # Add a subtle glow effect
+    glow = output.filter(ImageFilter.GaussianBlur(radius=2))
+    output = ImageChops.add(output, glow)
+    
+    return output
 
-    # Blend the texture with the original image
-    img = Image.composite(img, img.filter(ImageFilter.CONTOUR), texture)
-
-    # Step 3: Darken certain areas (e.g., under eyes)
-    draw = ImageDraw.Draw(img)
-    draw.ellipse([(width * 0.3, height * 0.4), (width * 0.4, height * 0.45)], fill=(50, 50, 50, 128))
-    draw.ellipse([(width * 0.6, height * 0.4), (width * 0.7, height * 0.45)], fill=(50, 50, 50, 128))
-
+def enhance_features(img):
+    """
+    Enhance facial features to make them more prominent.
+    """
+    # Enhance contrast
+    enhancer = ImageEnhance.Contrast(img)
+    img = enhancer.enhance(1.2)
+    
+    # Enhance sharpness
+    enhancer = ImageEnhance.Sharpness(img)
+    img = enhancer.enhance(1.3)
+    
+    # Enhance color
+    enhancer = ImageEnhance.Color(img)
+    img = enhancer.enhance(1.1)
+    
     return img
 
-def sketch_effect(img):
+def add_avatar_style(img):
     """
-    Apply a sketch-like effect to the image.
-    - Convert the image to grayscale.
-    - Invert the colors.
-    - Apply a Gaussian blur.
-    - Blend the original grayscale image with the blurred inverted image.
+    Apply artistic styling to make it look more like an avatar.
     """
-    # Convert to grayscale
-    gray = img.convert("L")
-
-    # Invert the grayscale image
-    inverted = ImageOps.invert(gray)
-
-    # Apply Gaussian blur to the inverted image
-    blurred = inverted.filter(ImageFilter.GaussianBlur(10))
-
-    # Blend the grayscale image with the blurred inverted image
-    sketch = Image.blend(gray, blurred, alpha=0.5)
-
-    # Convert back to RGB for further processing
-    return sketch.convert("RGB")
-
-def add_color_overlay(img, color=(255, 100, 0), intensity=0.3):
-    """
-    Add a color overlay to the image.
-    - `color`: The RGB color of the overlay.
-    - `intensity`: The transparency level of the overlay (0 to 1).
-    """
-    overlay = Image.new("RGB", img.size, color)
-    return Image.blend(img, overlay, alpha=intensity)
-
-def cartoonize_with_aging(image_path, output_path):
-    """
-    Apply cartoonization and aging effects to the image.
-    """
-    img = Image.open(image_path).convert("RGB")
-
-    # Step 1: Apply smoothing
+    # Apply edge enhancement
+    img = img.filter(ImageFilter.EDGE_ENHANCE_MORE)
+    
+    # Add a subtle cartoon effect
     img = img.filter(ImageFilter.SMOOTH_MORE)
+    
+    # Add a slight vignette effect
+    width, height = img.size
+    mask = Image.new('L', (width, height), 255)
+    draw = ImageDraw.Draw(mask)
+    draw.ellipse([-width/4, -height/4, width*1.25, height*1.25], fill=0)
+    mask = mask.filter(ImageFilter.GaussianBlur(radius=width/8))
+    img.putalpha(mask)
+    
+    return img
 
-    # Step 2: Apply aging effects
-    img = add_aging_effects(img)
-
-    # Save the final image
-    img.save(output_path)
-
-def create_watercolor_avatar(image_path, output_path):
+def create_avatar(image_path, output_path):
     """
-    Create an avatar with a watercolor effect and vignette overlay.
+    Create a polished avatar from the input image.
     """
-    # Open the input image
-    img = Image.open(image_path).convert("RGB")
-
-    # Step 1: Apply the watercolor effect
-    img = watercolor_effect(img)
-
-    # Step 2: Add a vignette overlay
-    img = add_vignette(img, intensity=0.6)
-
-    # Step 3: Add a border around the avatar
-    border_color = (255, 255, 255)  # White border
-    border_width = 15
-    img = ImageOps.expand(img, border=border_width, fill=border_color)
-
-    # Save the final avatar
-    img.save(output_path)
-
-def create_artistic_avatar(image_path, output_path):
-    """
-    Create an artistic avatar with a sketch effect and color overlay.
-    """
-    # Open the input image
-    img = Image.open(image_path).convert("RGB")
-
-    # Step 1: Apply the sketch effect
-    img = sketch_effect(img)
-
-    # Step 2: Add a color overlay (e.g., red tint)
-    img = add_color_overlay(img, color=(255, 0, 0), intensity=0.2)
-
-    # Step 3: Add a border around the avatar
-    border_color = (0, 0, 0)  # Black border
-    border_width = 10
-    img = ImageOps.expand(img, border=border_width, fill=border_color)
-
-    # Save the final avatar
-    img.save(output_path)
+    try:
+        # Open and convert image
+        img = Image.open(image_path).convert('RGB')
+        
+        # Resize and crop to square
+        img = resize_and_crop(img)
+        
+        # Enhance features
+        img = enhance_features(img)
+        
+        # Apply avatar styling
+        img = add_avatar_style(img)
+        
+        # Add avatar effects
+        img = add_avatar_effects(img)
+        
+        # Save the final avatar
+        img.save(output_path, 'PNG', quality=95)
+        return True
+        
+    except Exception as e:
+        print(f"Error creating avatar: {str(e)}", file=sys.stderr)
+        return False
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
@@ -128,9 +112,7 @@ if __name__ == "__main__":
     input_image = sys.argv[1]
     output_avatar = sys.argv[2]
 
-    try:
-        create_artistic_avatar(input_image, output_avatar)
-        print(f"Avatar saved to {output_avatar}")
-    except Exception as e:
-        print(f"Error: {e}")
+    success = create_avatar(input_image, output_avatar)
+    if not success:
         sys.exit(1)
+    print(f"Avatar saved to {output_avatar}")
