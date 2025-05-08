@@ -18,17 +18,17 @@ class PsychometricResponse(db.Model):
 
 # === QUESTIONS & DESCRIPTIONS ===
 questions = {
-    "Money Avoidance": [...],  # shortened for brevity
-    "Money Worship": [...],
-    "Money Status": [...],
-    "Money Vigilance": [...]
+    "Money Resentment": [...],  # shortened for brevity
+    "Financial Fantasists": [...],
+    "Money Prestige": [...],
+    "Money Anxiety": [...]
 }
 
 descriptions = {
-    "Money Avoidance": "Money Avoiders may also believe...",
-    "Money Worship": "Money Worshipers believe...",
-    "Money Status": "Money Status seekers...",
-    "Money Vigilance": "The Money Vigilant are alert..."
+    "Money Resentment": "Money Avoiders may also believe...",
+    "Financial Fantasists": "Money Worshipers believe...",
+    "Money Prestige": "Money Status seekers...",
+    "Money Anxiety": "The Money Vigilant are alert..."
 }
 
 # === ROUTES ===
