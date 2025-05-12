@@ -25,10 +25,10 @@ questions = {
 }
 
 descriptions = {
-    "Money Resentment": "Money Avoiders may also believe...",
-    "Financial Fantasists": "Money Worshipers believe...",
-    "Money Prestige": "Money Status seekers...",
-    "Money Anxiety": "The Money Vigilant are alert..."
+    "Money Resentment": "Money Resenters may also believe...",
+    "Financial Fantasists": "Financial Fantasists believe...",
+    "Money Prestige": "Money Prestige seekers...",
+    "Money Anxiety": "Money Anxious are alert..."
 }
 
 # === ROUTES ===

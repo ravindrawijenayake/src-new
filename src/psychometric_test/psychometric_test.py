@@ -3,9 +3,9 @@ questions = {
     "Money Resentment": [
         "If I have more money than most people in society, then, I do not deserve it.",
         "All rich people achieve wealth through greed and exploitation.",
-        "If I have more money than most people in society, then, I do not deserve it.",
-        "If I have more money than most people in society, then, I do not deserve it.",
-        "If I have more money than most people in society, then, I do not deserve it."
+        "I do not deserve to be wealthy.",
+        "Caring about moeny makes you immoral",
+        "Rich people take advantage of others to earn their wealth"
     ],
     "Money Fantasists": [
         "All problems can be solved by spending money.",
@@ -32,10 +32,10 @@ questions = {
 
 # Descriptions
 descriptions = {
-    "Money Resentment": "Money Avoiders may also believe that they do not deserve money. They may believe that wealthy people are greedy or corrupt. They often believe that there is virtue in living with less money.",
-    "Financial Fantasists": "Money Worshipers believe that money is the key to happiness. They feel that the solution to their problems is to have more money. At the same time, they believe that one can never have enough money. They find that the pursuit of money never quite satisfies them.",
-    "Money Prestige": "Money Status seekers tend to link their self-worth with their net worth. They may prioritize outward displays of wealth. This behavior can put them at risk of overspending.",
-    "Money Anxiety": "The Money Vigilant are alert, watchful, and concerned about their financial health. Feeling that they have enough money is important to them. They believe it is important to save."
+    "Money Resentment": "Money Resenters may also believe that they do not deserve money. They may believe that wealthy people are greedy or corrupt. They often believe that there is virtue in living with less money.",
+    "Financial Fantasists": "Financial Fantasists believe that money is the key to happiness. They feel that the solution to their problems is to have more money. At the same time, they believe that one can never have enough money. They find that the pursuit of money never quite satisfies them.",
+    "Money Prestige": "Money Prestige seekers tend to link their self-worth with their net worth. They may prioritize outward displays of wealth. This behavior can put them at risk of overspending.",
+    "Money Anxiety": "The Money Anxious are alert, watchful, and concerned about their financial health. Feeling that they have enough money is important to them. They believe it is important to save."
 }
 
 # Collect scores
