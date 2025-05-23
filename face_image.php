@@ -21,7 +21,7 @@ $username = 'root';
 $password = '';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo = new PDO("mysql:host=$host;port=3307;dbname=$dbname", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
@@ -62,7 +62,7 @@ if (isset($_POST['upload'])) {
 
         // Store the file path in the session for preview
         $_SESSION['uploaded_image'] = $filePath;
-        echo "<div class='success-message'>Image loaded successfully! You can now preview it before Upload. To upload, please click the 'Submit' button below.</div>";
+        // Removed: echo "<div class='success-message'>Image loaded successfully! You can now preview it before Upload. To upload, please click the 'Submit' button below.</div>";
     } else {
         echo "<div class='error-message'>Error uploading the image. Please try again.</div>";
     }
@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="../css/futureselfstyle.css">
     <link rel="stylesheet" href="../css/progressbar.css">
     <link rel="stylesheet" href="face_image_style.css">
-    <?php $progressStep = 3; include '../php/progressbar.php'; ?>
+
 </head>
 <body>
     <header>
@@ -124,56 +124,43 @@ if (isset($_POST['submit'])) {
     </header>
     <?php $progressStep = 3; include '../php/progressbar.php'; ?>
     <main>
-        <div class="progress-bar-container">
-            <div class="progress-bar" id="progress-bar" style="width:33%"></div>
-            <div class="progress-labels">
-                <span class="progress-label active">1. Future Self</span>
-                <span class="progress-label">2. Face Image</span>
-                <span class="progress-label">3. Avatar</span>
-            </div>
+        <div class="futureself-hero">
+            <h1><span class="icon">🖼️</span> Upload & Preview Your Face Image</h1>
         </div>
-
-        <?php if (isset($success_message)): ?>
-            <div class="banner success-banner"><?php echo $success_message; ?></div>
-        <?php elseif (isset($error_message)): ?>
-            <div class="banner error-banner"><?php echo $error_message; ?></div>
-        <?php endif; ?>
-
-        <h1>Upload Your Face Image</h1>
-        <p>Upload your recent face image to imagine your future self.</p>
-
-        <!-- Upload Form -->
-        <form action="face_image.php" method="POST" enctype="multipart/form-data" id="upload-form">
-            <fieldset>
-                <div class="upload-area">
-                    <h2>Step 1: Upload Your Face</h2>
-                    <input type="file" name="face_image" accept="image/*" required>
-                    <button type="submit" name="upload">Upload</button>
+        <div class="futureself-avatar-card card" style="max-width: 700px; margin: 32px auto; text-align: center; padding: 32px 24px;">
+            <div style="display: flex; justify-content: center; align-items: flex-start; gap: 40px; flex-wrap: wrap;">
+                <div style="flex:1; min-width:260px; max-width:340px; display:flex; flex-direction:column; align-items:center;">
+                    <h2 style="margin-bottom: 18px; color: #2196f3; font-size: 1.3em;">Step 1: Upload Your Face Image</h2>
+                    <form action="face_image.php" method="POST" enctype="multipart/form-data" id="upload-form" style="width:100%;">
+                        <input type="file" name="face_image" accept="image/*" required style="margin-bottom: 18px; width: 100%;">
+                        <button type="submit" name="upload" class="futureself-btn" style="width: 100%;">Upload</button>
+                    </form>
                 </div>
-            </fieldset>
-        </form>
-
-        <!-- Preview Section -->
-        <?php if (isset($_SESSION['uploaded_image'])): ?>
-            <div class="preview-area card">
-                <h2>Step 2: Preview Your Image</h2>
-                <img src="<?php echo htmlspecialchars($_SESSION['uploaded_image']); ?>" alt="Uploaded Face Image" style="max-width:200px; border-radius:12px; box-shadow:0 2px 12px rgba(33,150,243,0.12);">
+                <div style="flex:1; min-width:260px; max-width:340px; display:flex; flex-direction:column; align-items:center;">
+                    <h2 style="margin-bottom: 18px; color: #2196f3; font-size: 1.3em;">Step 2: Preview Your Image</h2>
+                    <div class="preview-area card" style="width: 320px; height: 320px; background: #f8f8f8; border-radius: 20px; box-shadow: 0 4px 24px rgba(33,150,243,0.13); border: 3px solid #2196f3; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; overflow: hidden;">
+                        <?php if (isset($_SESSION['uploaded_image'])): ?>
+                            <img src="<?php echo htmlspecialchars($_SESSION['uploaded_image']); ?>" alt="Uploaded Face Image" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 16px; display: block; margin: auto; background: transparent;" />
+                        <?php else: ?>
+                            <p class="avatar-info-text">No image uploaded yet. Please upload your face image to preview.</p>
+                        <?php endif; ?>
+                    </div>
+                    <?php if (isset($_SESSION['uploaded_image'])): ?>
+                        <form action="face_image.php" method="POST" id="submit-form" style="width:100%;">
+                            <button type="submit" name="submit" class="futureself-btn" style="width: 100%;">Submit</button>
+                        </form>
+                    <?php endif; ?>
+                </div>
             </div>
-            <!-- Submit Form -->
-            <form action="face_image.php" method="POST" id="submit-form">
-                <button type="submit" name="submit" class="submit-btn">Submit</button>
-            </form>
-        <?php endif; ?>
-
-        <div class="nav-buttons-row">
-            <button id="back-btn" class="nav-btn nav-btn-left" onclick="window.history.back();return false;">Back</button>
-            <button id="next-btn" class="nav-btn nav-btn-right">Next</button>
+            <div class="nav-buttons-row" style="margin-top: 32px;">
+                <button id="back-btn" class="nav-btn nav-btn-left" onclick="window.history.back();return false;">Back</button>
+                <button id="next-btn" class="nav-btn nav-btn-right">Next</button>
+            </div>
         </div>
     </main>
+    <link rel="stylesheet" href="face_image_style.css">
     <script>
-        // Progress bar interactivity
         document.addEventListener('DOMContentLoaded', function() {
-            // Next button logic
             document.getElementById('next-btn').onclick = function() {
                 <?php if (isset($_SESSION['uploaded_image'])): ?>
                     window.location.href = 'face_image_responses.php';
@@ -182,24 +169,7 @@ if (isset($_POST['submit'])) {
                 <?php endif; ?>
                 return false;
             };
-            // Show banner for upload/submit
-            <?php if (isset($_POST['upload'])): ?>
-                showBanner('Image loaded successfully! You can now preview it before Upload. To upload, please click the "Submit" button below.', 'success');
-            <?php elseif (isset($_POST['submit']) && !isset($success_message)): ?>
-                showBanner('Error saving the image URL to the database.', 'error');
-            <?php endif; ?>
         });
-
-        function showBanner(message, type) {
-            var banner = document.createElement('div');
-            banner.className = 'banner ' + (type === 'success' ? 'success-banner' : 'error-banner');
-            banner.textContent = message;
-            document.body.insertBefore(banner, document.body.firstChild);
-            setTimeout(function() {
-                banner.style.opacity = '0';
-                setTimeout(function() { banner.remove(); }, 600);
-            }, 3500);
-        }
     </script>
 </body>
 </html>

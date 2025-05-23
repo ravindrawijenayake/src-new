@@ -51,7 +51,13 @@ $responses = $_SESSION['submitted_responses'];
                         <?php foreach ($questions as $question => $response): ?>
                             <li>
                                 <span class="question-text"><?php echo htmlspecialchars($question); ?></span>
-                                <span class="answer-text"><?php echo htmlspecialchars($response); ?></span>
+                                <span class="answer-text"><?php 
+                                    if (is_array($response)) {
+                                        echo htmlspecialchars(implode(', ', $response));
+                                    } else {
+                                        echo htmlspecialchars($response);
+                                    }
+                                ?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
