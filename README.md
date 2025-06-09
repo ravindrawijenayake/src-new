@@ -34,7 +34,6 @@ The Finedica App's core functionality is built around four distinct and intercon
 * [Technologies Used](#technologies-used)
 * [Contributing](#contributing)
 * [License](#license)
-* [Contact](#contact)
 
 ---
 
