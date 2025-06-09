@@ -124,11 +124,11 @@ Once installed, access the application through your web server.
 
 The project is organized into several key modules:
 
-src-new/
-├── README.md                      # This README file
-├── chatbot.php                    # PHP interface for the chatbot
-├── chatbot.py                     # Main Python chatbot logic
-├── chatbot_model.pth              # Trained chatbot model
+`└── src-new/`
+`├── README.md                      # This README file`
+`├── chatbot.php                    # PHP interface for the chatbot`
+`├── chatbot.py                     # Main Python chatbot logic`
+`├── chatbot_model.pth              # Trained chatbot model`
 ├── chatbotstyle.css               # Chatbot specific styling
 ├── ...                            # Other root-level PHP, Python, and CSS files
 ├── 2020FC/                        # Older or separate authentication module
