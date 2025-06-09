@@ -1,13 +1,10 @@
 # FINEDICA APP
-
-
-
-Finedica App
+-----
 The Finedica App is designed to empower users on their financial journey by providing a personalized and guided experience towards achieving their monetary goals. It leverages a unique approach that combines self-reflection, behavioral analysis, and future visualization to help users make informed financial decisions.
-
+-----
 About Finedica
 Finedica guides users through a comprehensive four-phase process to cultivate a robust money philosophy and achieve specific financial aspirations. The app aims to transform abstract financial goals into tangible, actionable plans.
-
+-----
 Key Phases of the Finedica App
 The Finedica App's core functionality is built around four distinct and interconnected phases:
 
@@ -15,208 +12,146 @@ Data Gathering to Build the Future Self Avatar: This initial phase focuses on co
 Analyzing Previous Behavior: Finedica delves into a user's past financial activities. By understanding historical spending patterns, saving habits, and investment choices, the app provides insights into current behaviors that may impact future financial success. This analysis is crucial for identifying areas for improvement and reinforcing positive habits.
 Deciding Money Philosophy: This phase encourages users to define their core values and beliefs regarding money. Through guided exercises and psychometric tests, Finedica helps users articulate their personal "money philosophy," which serves as a guiding principle for all subsequent financial decisions and goal setting.
 Specific Goal Setting and Implementation: With a clear understanding of their financial past and a defined money philosophy, users can then set concrete and achievable financial goals. Whether it's buying your first home, saving for retirement, or any other specific financial objective, Finedica assists in breaking down these goals into actionable steps and provides tools for tracking progress and facilitating implementation.
-Project Structure Overview
-The chiemela-tech-src-new/ directory houses the entire Finedica App codebase, structured for modularity and maintainability.
 
-└── chiemela-tech-src-new/
-    ├── README.md
-    ├── chatbot.php                 # PHP script for chatbot interaction
-    ├── chatbot.py                  # Python script for chatbot logic (likely NLTK-based)
-    ├── chatbot_model.pth           # Trained chatbot model
-    ├── chatbotstyle.css            # Styling for the chatbot interface
-    ├── composer.json               # PHP dependency management
-    ├── composer.lock               # PHP dependency lock file
-    ├── data_loader.py              # Python script for data loading (likely for chatbot/ML)
-    ├── dimensions.json             # Configuration for dimensions (potentially for psychometric tests or avatar generation)
-    ├── face_image.php              # PHP script for handling face image uploads
-    ├── face_image_responses.php    # PHP for processing face image responses
-    ├── face_image_style.css        # Styling for face image upload interface
-    ├── future_self_style.css       # Styling for the future self visualization
-    ├── futureself.php              # PHP script for future self visualization logic
-    ├── futureself_responses.php    # PHP for processing future self responses
-    ├── intents.json                # Defines chatbot intents and responses
-    ├── main.css                    # Main application stylesheet
-    ├── model.py                    # Python script for the chatbot's neural network model
-    ├── psychometric_test.php       # PHP script for the psychometric test
-    ├── psychometric_test_script.js # JavaScript for psychometric test interactivity
-    ├── psychometric_test_style.css # Styling for the psychometric test
-    ├── questions.json              # Psychometric test questions
-    ├── regenerate_avatar_cleanup.php # PHP script for cleaning up regenerated avatars
-    ├── requirements.txt            # Python dependencies
-    ├── save_psychometric_results.php # PHP for saving psychometric test results
-    ├── tfidf_vocab.json            # TF-IDF vocabulary (likely for chatbot)
-    ├── train.py                    # Python script for training the chatbot model
-    ├── 2020FC/                     # User authentication and core frontend (Legacy/Older version?)
-    │   ├── config.php
-    │   ├── login.php
-    │   ├── session.php
-    │   ├── signup.php
-    │   └── src/
-    │       ├── css/
-    │       │   └── main.css
-    │       ├── html/
-    │       │   ├── avatar.html
-    │       │   ├── chatbot.html
-    │       │   ├── index.html
-    │       │   ├── index1.html
-    │       │   └── questionnaire.html
-    │       └── js/
-    │           ├── auth.js
-    │           └── main.js
-    ├── expenditure/                # Expenditure tracking module
-    │   ├── database.db
-    │   ├── expenditure_app.py
-    │   ├── expenditure_index.html
-    │   ├── expenditure_script.js
-    │   ├── expenditure_style.css
-    │   ├── expenditure_static/
-    │   │   └── expenditure_style.css
-    │   ├── expenditure_templates/
-    │   │   ├── expenditure_index.html
-    │   │   └── expenditure_results.html
-    │   └── venv/                   # Python virtual environment for expenditure module
-    │       └── pyvenv.cfg
-    ├── psychometric_test/          # Dedicated psychometric test module
-    │   ├── psychometric_test.py
-    │   ├── psychometrictest_test_app.py
-    │   ├── .DS_Store
-    │   ├── psychometric_test_static/
-    │   │   ├── .DS_Store
-    │   │   └── css/
-    │   │       └── style.css
-    │   └── psychometric_test_templates/
-    │       ├── psychometric_test.html
-    │       └── result.html
-    ├── src/                        # Core application source files
-    │   ├── Avatar_test/            # Avatar generation testing
-    │   │   ├── app.py
-    │   │   ├── avatar_display.php
-    │   │   ├── create_avatar.php
-    │   │   ├── create_avatar.py
-    │   │   └── dreambooth_aging_avatar.py # Script for aging avatar using Dreambooth
-    │   ├── avatars/                # Directory for generated avatars
-    │   ├── chatbot/                # Chatbot specific files (duplicate of root level?)
-    │   │   ├── chatbot.php
-    │   │   ├── chatbot.py
-    │   │   ├── chatbot_model.pth
-    │   │   ├── chatbotstyle.css
-    │   │   ├── data_loader.py
-    │   │   ├── dimensions.json
-    │   │   ├── intents.json
-    │   │   ├── main.css
-    │   │   ├── model.py
-    │   │   ├── requirements.txt
-    │   │   ├── train.py
-    │   │   └── __pycache__/
-    │   ├── css/                    # Centralized CSS files
-    │   │   ├── avatarstyle.css
-    │   │   ├── chatbotstyle.css
-    │   │   ├── expenditurestyle.css
-    │   │   ├── futureselfstyle.css
-    │   │   └── main.css
-    │   ├── expenditure/            # Expenditure module (duplicate of root level?)
-    │   │   ├── expenditure_app.py
-    │   │   ├── expenditure_database.db
-    │   │   ├── expenditure_index.php
-    │   │   ├── expenditure_script.js
-    │   │   ├── expenditure_style.css
-    │   │   ├── expenditure_static/
-    │   │   │   └── style.css
-    │   │   ├── expenditure_templates/
-    │   │   │   ├── index.html
-    │   │   │   └── results.html
-    │   │   └── expenditure_venv/
-    │   │       ├── pyvenv.cfg
-    │   │       ├── bin/
-    │   │       └── lib/
-    │   │           └── python3.9/
-    │   │               └── site-packages/
-    │   ├── js/                     # Centralized JavaScript files
-    │   │   ├── aged_avatar_gen.js
-    │   │   ├── auth.js
-    │   │   ├── avatar.js
-    │   │   ├── chatbot.js
-    │   │   ├── expenditurescript.js
-    │   │   └── main.js
-    │   ├── php/                    # Centralized PHP scripts
-    │   │   ├── aged_avatar_gen.php
-    │   │   ├── avatar1.php
-    │   │   ├── avatar_frontpage.php
-    │   │   ├── avatar_googlecloud.php
-    │   │   ├── chatbot.php
-    │   │   ├── config.php
-    │   │   ├── db_config.php
-    │   │   ├── db_connect.php
-    │   │   ├── debug_log.txt
-    │   │   ├── error_log.txt
-    │   │   ├── exec_log.txt
-    │   │   ├── expenditure.php
-    │   │   ├── face_image.php
-    │   │   ├── face_image_responses.php
-    │   │   ├── frontend_psychometric_test.php
-    │   │   ├── futureself.php
-    │   │   ├── futureself_responses.php
-    │   │   ├── generate_avatar.php
-    │   │   ├── get_avatar.php
-    │   │   ├── google_drive_upload.php
-    │   │   ├── home.php
-    │   │   ├── index.php
-    │   │   ├── login.php
-    │   │   ├── logout.php
-    │   │   ├── process_psychometric_test.php
-    │   │   ├── psychometric_test_api.php
-    │   │   ├── questionnaire.php
-    │   │   ├── session.php
-    │   │   ├── signup.php
-    │   │   ├── test.php
-    │   │   ├── test_db.php
-    │   │   ├── upload.php
-    │   │   ├── upload1.php
-    │   │   └── upload_image.php
-    │   ├── psychometric_test/      # Psychometric test module (duplicate of root level?)
-    │   │   ├── psychometric_test.py
-    │   │   ├── psychometric_test_app.py
-    │   │   ├── .DS_Store
-    │   │   ├── psychometric_test_static/
-    │   │   │   ├── .DS_Store
-    │   │   │   └── css/
-    │   │   │       └── psychometric_test_style.css
-    │   │   └── psychometric_test_templates/
-    │   │       ├── psychometric_test.html
-    │   │       └── psychometrict_test_result.html
-    │   ├── python/                 # Centralized Python scripts
-    │   │   ├── aged_avatar_gen.py
-    │   │   ├── chatbot.py
-    │   │   ├── generate_avatar.py
-    │   │   ├── psychometric_test.py
-    │   │   ├── test_nltk.py
-    │   │   ├── user_reg_db.db
-    │   │   ├── data/
-    │   │   └── data_preproc/
-    │   ├── uploads/                # Directory for user uploads (e.g., face images)
-    │   └── .vscode/                # VS Code configuration files
-    │       ├── launch.json
-    │       └── settings.json
-    └── vendor/                     # Composer dependencies (PHP)
-        ├── autoload.php
-        ├── bin/
-        ├── brick/
-        ├── composer/
-        ├── firebase/
-        ├── google/
-        │   ├── auth/
-        │   ├── cloud-core/
-        │   └── cloud-storage/
-Website Creation Components
-The development of the Finedica website encompasses several key components:
+-----
 
-Creating the Interface: The user interface is designed to be intuitive and engaging, guiding users seamlessly through each phase of the Finedica journey. HTML, CSS, and JavaScript files (found throughout src/html, src/css, and src/js) are used to create the visual and interactive elements.
-Register and Login Pages: Secure user authentication is managed through login.php, signup.php, and session.php within the 2020FC/ and src/php directories, ensuring user data privacy.
-Database to Handle User Data: User information, psychometric test results, and financial data are stored and managed through database interactions, likely via the Python user_reg_db.db and the expenditure module's database.db, accessed by various PHP and Python scripts.
-Psychometric Tests: A crucial element for understanding user behavior and philosophy. The psychometric test logic is handled by psychometric_test.php and psychometric_test.py, with questions defined in questions.json.
-Upload Image & Conceptualizing Future Self: Users can upload images (face_image.php, upload_image.php) which are then used in the conceptualization of their "Future Self Avatar" through scripts like generate_avatar.py and aged_avatar_gen.py.
-Avatar: The core visual representation of the user's financial future. The avatar generation process, including aging effects (likely through dreambooth_aging_avatar.py), is a central feature.
-Space Bubbles: This refers to visual elements within the app that represent the chatbot area
+Table of Contents
+Features
+Installation
+Prerequisites
+Setup Steps
+Usage
+Project Structure
+Technologies Used
+Contributing
+License
+Contact
+Features
+Chatbot: An intelligent conversational agent powered by Python, capable of understanding and responding to user queries.
+Avatar Generation: Users can generate and potentially age avatars using DreamBooth, providing a dynamic visual representation.
+Psychometric Test: A web-based psychometric test designed to assess user traits, with results saved and processed.
+Expenditure Tracker: A personal finance tool to help users monitor and manage their expenditures.
+User Authentication: Secure user registration and login system.
+Google Cloud Integration: Utilizes Google Cloud services for various functionalities, including potential image storage and batch processing.
+Installation
+Prerequisites
+Before you begin, ensure you have the following installed:
+
+Web Server: Apache or Nginx
+PHP: Version 7.4 or higher
+Composer: PHP dependency manager
+Python: Version 3.8 or higher
+pip: Python package installer
+Node.js & npm (optional): For front-end asset management if applicable
+Database: (Likely SQLite for expenditure/database.db, and potentially MySQL/PostgreSQL for user registration).
+Setup Steps
+Clone the Repository:
+
+Bash
+
+git clone https://github.com/your-username/chiemela-tech-src-new.git
+cd chiemela-tech-src-new
+PHP Dependencies:
+Install PHP dependencies using Composer.
+
+Bash
+
+composer install
+Python Dependencies:
+Navigate to the relevant Python directories and install dependencies from requirements.txt.
+
+Bash
+
+# For Chatbot
+cd src/chatbot/
+pip install -r requirements.txt
+cd ../../
+
+# For main project requirements (if any global requirements.txt exists)
+pip install -r requirements.txt # Located in the root of chiemela-tech-src-new/
+You may also need to install dependencies for expenditure_app.py and psychometric_test_app.py if they have separate requirements.txt files within their respective venv directories, or activate their virtual environments.
+
+Database Setup:
+
+For the expenditure tracker, ensure the expenditure/database.db file is accessible and writable by the web server.
+For user authentication, configure your database connection in src/php/db_config.php and run any necessary SQL schema scripts if not already present.
+Web Server Configuration:
+Configure your web server (Apache/Nginx) to point its document root to the chiemela-tech-src-new/ directory, or a sub-directory containing your primary index.php or index.html file. Ensure PHP is correctly configured and enabled.
+
+Google Cloud Configuration:
+If using Google Cloud services, ensure your service account credentials are set up correctly and accessible to the PHP and Python scripts (e.g., via environment variables or a keyfile.json). Refer to the Google Cloud documentation for specific service configurations (e.g., Google Cloud Storage, Google Batch).
+
+Usage
+Once installed, access the application through your web server.
+
+Homepage: Navigate to http://localhost/ or your configured domain.
+Login/Signup: Access http://localhost/src/php/login.php or http://localhost/src/php/signup.php to manage user accounts.
+Chatbot: The chatbot interface is likely accessible via http://localhost/chatbot.php or http://localhost/src/php/chatbot.php, or embedded within an HTML page.
+Avatar Generation: Functionality for creating and regenerating avatars would be available through http://localhost/face_image.php or http://localhost/src/php/generate_avatar.php.
+Psychometric Test: Start the test at http://localhost/psychometric_test.php or http://localhost/src/php/frontend_psychometric_test.php.
+Expenditure App: Access the expenditure tracker at http://localhost/expenditure/expenditure_index.html or http://localhost/src/php/expenditure.php.
+Project Structure
+The project is organized into several key modules:
+
+chiemela-tech-src-new/
+├── README.md                      # This README file
+├── chatbot.php                    # PHP interface for the chatbot
+├── chatbot.py                     # Main Python chatbot logic
+├── chatbot_model.pth              # Trained chatbot model
+├── chatbotstyle.css               # Chatbot specific styling
+├── ...                            # Other root-level PHP, Python, and CSS files
+├── 2020FC/                        # Older or separate authentication module
+│   ├── config.php
+│   ├── login.php
+│   ├── signup.php
+│   └── src/                       # HTML, CSS, JS for 2020FC
+├── expenditure/                   # Expenditure tracking application
+│   ├── database.db                # SQLite database for expenditures
+│   ├── expenditure_app.py         # Python backend for expenditure
+│   ├── expenditure_index.html     # Frontend for expenditure app
+│   └── ...                        # Associated static files and templates
+├── psychometric_test/             # Psychometric test application (standalone Python Flask app)
+│   ├── psychometric_test.py
+│   ├── psychometric_test_app.py
+│   └── ...                        # Static files and templates
+├── src/                           # Main source code directory
+│   ├── Avatar_test/               # Python scripts for avatar generation/aging
+│   │   ├── app.py
+│   │   ├── create_avatar.py
+│   │   └── dreambooth_aging_avatar.py
+│   ├── avatars/                   # Directory to store generated avatars
+│   ├── chatbot/                   # Dedicated chatbot module (Python/PHP)
+│   │   ├── chatbot.php
+│   │   ├── chatbot.py
+│   │   ├── chatbot_model.pth
+│   │   └── ...
+│   ├── css/                       # Global and module-specific CSS files
+│   ├── expenditure/               # Expenditure module (PHP/Python integration)
+│   │   ├── expenditure_app.py
+│   │   ├── expenditure_database.db
+│   │   └── ...
+│   ├── js/                        # Frontend JavaScript files
+│   ├── php/                       # Core PHP scripts for various functionalities
+│   │   ├── login.php
+│   │   ├── generate_avatar.php
+│   │   ├── process_psychometric_test.php
+│   │   └── ...
+│   ├── psychometric_test/         # Psychometric test module (Python/PHP integration)
+│   │   ├── psychometric_test.py
+│   │   └── ...
+│   ├── python/                    # General Python utilities and scripts
+│   │   ├── aged_avatar_gen.py
+│   │   ├── generate_avatar.py
+│   │   └── user_reg_db.db
+│   ├── uploads/                   # Directory for user uploads (e.g., face images)
+│   └── .vscode/                   # VS Code configuration files
+└── vendor/                        # Composer PHP dependencies
+    ├── autoload.php
+    ├── firebase/php-jwt/          # JWT library for authentication
+    ├── google/auth/               # Google Cloud authentication library
+    ├── google/cloud-core/         # Core Google Cloud client libraries
+    ├── google/cloud-storage/      # Google Cloud Storage client library
+    └── ...
 
 -----
 
